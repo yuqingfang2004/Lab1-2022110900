@@ -6,7 +6,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 
-// 此处为B1上的修改2
+
+
+// 此处为B1以及C4分支上的修改2，手工消解冲突
+
 class Graph {
     //===================== 数据结构 =====================//
     private final Map<String, Map<String, Integer>> adjacencyList = new HashMap<>();
