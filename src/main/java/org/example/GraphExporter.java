@@ -2,6 +2,7 @@ package org.example;
 
 import java.nio.file.*;
 
+// 这是在B2上的修改2
 class GraphExporter {
     // 需要系统安装Graphviz并配置PATH环境变量
     public static void exportToImage(Graph graph, String format) throws Exception {
