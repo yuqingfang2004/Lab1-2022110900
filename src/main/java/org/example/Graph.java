@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
+// 此处为C4分支上的修改2
 class Graph {
     //===================== 数据结构 =====================//
     private final Map<String, Map<String, Integer>> adjacencyList = new HashMap<>();
