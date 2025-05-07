@@ -11,8 +11,7 @@ class GraphExporter {
         Files.write(dotFile, dotContent.getBytes());
 
         String outputFile = "./src/test/graph." + format;
-        Process process = new ProcessBuilder("dot", "-T" + format,
-                dotFile.toString(), "-o", outputFile).start();
+        Process process = new ProcessBuilder("dot", "-T" + format, dotFile.toString(), "-o", outputFile).start();
         int exitCode = process.waitFor();
 
         if (exitCode == 0) {

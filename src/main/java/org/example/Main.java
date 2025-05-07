@@ -10,12 +10,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
-
-
-
-
 // 这是git plugin的修改
 class TextProcessor {
+    /**
+     * 处理文本文件，将其内容转换为小写，去除非字母字符，合并连续空格，并返回单词列表。
+     *
+     * @param file 待处理的文本文件
+     * @return 处理后的单词列表
+     * @throws IOException 读取文件时可能抛出的异常
+     */
     public static List<String> processText(File file) throws IOException {
         String content = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
         content = content.toLowerCase()
@@ -35,12 +38,23 @@ class TextProcessor {
 
 // 这是在B2上的修改1
 public class Main {
-
+    /**
+     * 展示有向图的文本结构，并可选择将其导出为图形文件。
+     *
+     * @param graph 要展示的有向图对象
+     */
     private static void showDirectedGraph(Graph graph) {
         System.out.println("\n有向图结构：");
         System.out.println(graph.toTextGraph());
     }
 
+    /**
+     * 根据输入的文本和有向图，生成包含桥接词的新文本。
+     *
+     * @param graph     有向图对象
+     * @param inputText 输入的文本
+     * @return 生成的新文本
+     */
     private static String generateNewText(Graph graph, String inputText) {
         // 分割并保留原始单词
         List<String> originalWords = new ArrayList<>();
@@ -63,9 +77,9 @@ public class Main {
         newWords.add(originalWords.get(0));
 
         Random rand = new Random();
-        for (int i = 0; i < originalWords.size()-1; i++) {
+        for (int i = 0; i < originalWords.size() - 1; i++) {
             String current = lowerWords.get(i);
-            String next = lowerWords.get(i+1);
+            String next = lowerWords.get(i + 1);
 
             // 查询桥接词
             List<String> bridges = graph.getBridgeWords(current, next);
@@ -74,12 +88,18 @@ public class Main {
                 String bridge = bridges.get(rand.nextInt(bridges.size()));
                 newWords.add(bridge);
             }
-            newWords.add(originalWords.get(i+1));
+            newWords.add(originalWords.get(i + 1));
         }
 
         return String.join(" ", newWords);
     }
 
+    /**
+     * 处理用户输入，调用generateNewText方法生成新文本并输出结果。
+     *
+     * @param scanner 用于读取用户输入的Scanner对象
+     * @param graph   有向图对象
+     */
     private static void handleNewTextGeneration(Scanner scanner, Graph graph) {
         System.out.print("\n请输入新文本（包含要处理的英文句子）: ");
         String input = scanner.nextLine();
@@ -92,6 +112,12 @@ public class Main {
     // 此处进行了第二次修改
     // 此处为C4分支上的修改1
     // 已经手工消解冲突
+
+    /**
+     * 程序的入口点，负责读取文本文件，构建有向图，并提供功能菜单供用户操作。
+     *
+     * @param args 命令行参数，可传入文本文件路径
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         File file;
@@ -178,7 +204,7 @@ public class Main {
                             }
                             System.out.println(allPaths);
                         } else if (bridge_query_words.length == 2) {
-                            if (!graph.containsNode(bridge_query_words[0].toLowerCase())||!graph.containsNode(bridge_query_words[1].toLowerCase())) {
+                            if (!graph.containsNode(bridge_query_words[0].toLowerCase()) || !graph.containsNode(bridge_query_words[1].toLowerCase())) {
                                 System.out.println("输入的单词有1或者2个不在图当中！");
                                 break;
                             }
@@ -241,7 +267,7 @@ public class Main {
                 }
             }
         } catch (IOException e) {
-                System.err.println("文件处理错误: " + e.getMessage());
+            System.err.println("文件处理错误: " + e.getMessage());
         }
     }
 }
