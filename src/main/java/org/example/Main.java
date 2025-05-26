@@ -175,10 +175,8 @@ public class Main {
                             if (input.equalsIgnoreCase("q")) break;
 
                             String[] query_words = input.split("\\s+");
-                            if (query_words.length != 2) {
-                                query_words = Arrays.copyOf(query_words, 2);
-                                query_words[1] = "";
-                            }
+                            String word1 = query_words.length > 0 ? query_words[0] : "";
+                            String word2 = query_words.length > 1 ? query_words[1] : "";
                             System.out.println(graph.queryBridgeWords(query_words[0], query_words[1]));
                         }
                         break;
@@ -193,7 +191,7 @@ public class Main {
                             // 单个单词：计算到所有节点的路径
                             String source = bridge_query_words[0];
                             if (!graph.containsNode(source.toLowerCase())) {
-                                System.out.println("图中不包含该单词");
+                                System.out.println("图中不包含该单词!");
                                 break;
                             }
                             StringBuilder allPaths = new StringBuilder();
@@ -204,10 +202,6 @@ public class Main {
                             }
                             System.out.println(allPaths);
                         } else if (bridge_query_words.length == 2) {
-                            if (!graph.containsNode(bridge_query_words[0].toLowerCase()) || !graph.containsNode(bridge_query_words[1].toLowerCase())) {
-                                System.out.println("输入的单词有1或者2个不在图当中！");
-                                break;
-                            }
                             // 两个单词：计算指定路径
                             System.out.println(graph.calcShortestPath(bridge_query_words[0], bridge_query_words[1]));
                         } else {

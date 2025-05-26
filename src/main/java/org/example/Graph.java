@@ -210,12 +210,47 @@ class Graph {
      * @return 最短路径信息的字符串
      */
     public String calcShortestPath(String word1, String word2) {
+        StringBuilder sb = new StringBuilder();
+        word1 = word1.toLowerCase();
+
+        // 检查word1是否存在
+        if (!containsNode(word1)) {
+            sb.append("输入的单词有1或者2个不在图当中！");
+            return sb.toString();
+        }
+
+        // 处理word2为空的情况（计算到所有节点的路径）
+        if (word2 == null || word2.isEmpty()) {
+            boolean hasPath = false;
+            for (String target : adjacencyList.keySet()) {
+                if (!target.equals(word1)) {
+                    PathResult result = shortestPath(word1, target);
+                    if (result != null) {
+                        hasPath = true;
+                        sb.append(String.format("到 \"%s\" 的最短路径:\n", target));
+                        sb.append(String.format("  %s (总权重: %d)\n",
+                                String.join(" → ", result.paths.get(0)), result.totalWeight));
+                    }
+                }
+            }
+            if (!hasPath) {
+                sb.append(String.format("\"%s\" 到所有其他节点均不可达\n", word1));
+            }
+            return sb.toString();
+        }
+
+        // 处理word2不为空的情况（计算到指定节点的路径）
+        word2 = word2.toLowerCase();
+        if (!containsNode(word2)) {
+            sb.append("输入的单词有1或者2个不在图当中！");
+            return sb.toString();
+        }
+
         PathResult result = shortestPath(word1, word2);
         if (result == null) {
             return String.format("\"%s\" 到 \"%s\" 不可达\n", word1, word2);
         }
 
-        StringBuilder sb = new StringBuilder();
         // 显示第一条路径
         sb.append(String.format("最短路径: %s (总权重: %d)\n",
                 String.join(" → ", result.paths.get(0)), result.totalWeight));
