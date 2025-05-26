@@ -144,6 +144,9 @@ class Graph {
      * @return 桥接词信息的字符串
      */
     public String queryBridgeWords(String word1, String word2) {
+        if (word1 == null || word1.isEmpty() || word2 == null || word2.isEmpty()) {
+            return "输入格式错误！";
+        }
         String w1 = word1.toLowerCase();
         String w2 = word2.toLowerCase();
 

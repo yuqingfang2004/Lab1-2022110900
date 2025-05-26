@@ -176,8 +176,8 @@ public class Main {
 
                             String[] query_words = input.split("\\s+");
                             if (query_words.length != 2) {
-                                System.out.println("输入格式错误！");
-                                continue;
+                                query_words = Arrays.copyOf(query_words, 2);
+                                query_words[1] = "";
                             }
                             System.out.println(graph.queryBridgeWords(query_words[0], query_words[1]));
                         }
